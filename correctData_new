@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+. ./checkData_new #to bring in variables from checkData_new.sh
+
+         if [[ "$pathDate" != "$fileDate" ]]
+         then
+                 echo $fileName "is corrupted"
+                 echo "$pathName" > tmp
+                 tail -3 $wholePath >> tmp
+                 #echo "$pathDate" > $wholePath
+                 mv tmp  $wholePath
+         fi
+ done

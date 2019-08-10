@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+rm ./townFileIndex
+
+files=$(find ./ | grep "ff*")
+
+for file in $files
+do
+        town=$(head -3 $files | tail -1)
+        echo "$town:$files" >> tmpIndex
+done
+
+cat tmpIndex | sort > townFileIndex
+
+rm  tmpIndex

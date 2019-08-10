@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+. ./createTownIndex
+
+read -p "Please enter the town you wish to search " townInput
+
+for l in townFileIndex
+if [[$townInput != $town]]
+
+  echo "Cannot find this town in the current records"
+
+exit 0
+fi
+
+if [[$townInput == $town]]

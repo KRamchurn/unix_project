@@ -1,0 +1,82 @@
+#!/bin/bash
+
+
+ read -p "Enter a year : " yearInput
+ read -p "Enter function : " Function
+
+ if [[ yearInput -ge 2020 || yearInput -eq 2009 ]]
+ then
+         echo "invalid year"
+          exit 1
+  else
+
+          file=$(find ./$yearInput | grep ff | wc -l)
+          year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+
+  fi
+
+
+  if [[ "$Function" == "maximum" ]]
+  then
+          for ((i=1;i<=$file;i++))
+          do
+
+                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+                  population=$(tail -1 $year >> ./popMax)
+                  maxPop=$(sort -rn popMax | head -1)
+          done
+
+                  echo "The maximum population for $yearInput is: $maxPop "
+                  rm -r popMax
+  fi
+
+  if [[ "$Function" == "minimum" ]]
+  then
+          for ((i=1;i<=$file;i++))
+          do
+                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+                  minPopulation=$(tail -1 $year >> ./popMin)
+                  minPop=$(sort -n popMin | head -1)
+                  rm -r popMin
+          done
+
+                  echo "The minimum population for $yearInput is: $minPop "
+
+  fi
+
+  if [[ "$Function" == "average" ]]
+  then
+
+          for ((i=1;i<=$file;i++))
+          do
+                  avgPop=0
+                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+                  population=$(tail -1 $year)
+                  total=$(($total  + $population))
+                  done
+                  avgPop=$(($total / $file))
+          #       done
+
+                  echo "The average population for $yearInput is: $avgPop"
+  fi
+
+  if [[ "$Function" == "all" ]]
+  then
+
+          for ((i=1;i<=$file;i++))
+          do
+                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+
+                  population=$(tail -1 $year >> ./popMax)
+                  population=$(tail -1 $year >> ./popMin)
+                  population=$(tail -1 $year)
+
+                  maxPop=$(sort -rn popMax | head -1)
+                  minPop=$(sort -rn popMin | tail -1)
+                  total=$((total + $population))
+                  done
+                 avgPop=$(($total /$file))
+          echo "For $yearInput , the minimum population was: $minPop , the maximum was $maxPop     and the average was $avgPop "
+
+
+  fi

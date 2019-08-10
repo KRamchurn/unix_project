@@ -1,0 +1,24 @@
+#!/bin/bash
+
+noFiles=$(find | grep ff | wc -l)
+files=$(find | grep ff)
+
+for ((n=1;n<=$noFiles;n++))
+
+do
+
+path=$(find | grep ff | head -$n | tail -1 | cut -d"/" -f2-5)
+pathDate=$(find | grep ff | head -$n | tail -1 | cut -d"/" -f2-4 | tr "/" "-" )
+wholePath=$(find | grep ff | head -$n | tail -1)
+fileDate=$(cat $path | head -1)
+fileName=$(find | grep ff | head -$n | tail -1 | cut -d"/" -f5)
+
+         if [[ "$pathDate" != "$fileDate" ]]
+         then
+                 echo $fileName "is corrupted"
+                 echo "$pathName" > tmp
+                 tail -3 $wholePath >> tmp
+                 #echo "$pathDate" > $wholePath
+                 mv tmp  $wholePath
+         fi
+ done

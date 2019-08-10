@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+
+files=$(./ff*)
+
+for files in ./ff*
+do
+
+file=$(basename $files)
+year=$(head -1 $file | cut -d"-" -f1)
+month=$(head -1 $file | cut -d"-" -f2)
+day=$(head -1 $file | cut -d"-" -f3)
+
+       if ls | grep ^"year"
+       then
+               mkdir ./$year
+       fi
+
+       if ls ./$year | grep ^"$month"
+       then
+               mkdir ./$year/$month
+       fi
+
+       if ls ./$year/$month | grep ^"day"
+       then
+               mv $files ./$year/$month/$day/$file
+       else
+               mkdir ./$year/$month/$day
+               mv $files ./$year/$month/$day/$file
+       fi
+done
