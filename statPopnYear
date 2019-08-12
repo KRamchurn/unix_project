@@ -1,17 +1,15 @@
 #!/bin/bash
 
 
- read -p "Enter a year : " yearInput
- read -p "Enter function : " Function
-
- if [[ yearInput -ge 2020 || yearInput -eq 2009 ]]
+ 
+ if [[ $1 -ge 2020 || $1 -eq 2009 ]]
  then
          echo "invalid year"
           exit 1
   else
 
-          file=$(find ./$yearInput | grep ff | wc -l)
-          year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+          file=$(find ./$1 | grep ff | wc -l)
+          year=$(find ./$1 | grep ff | head -$i | tail -1)
 
   fi
 
@@ -21,12 +19,12 @@
           for ((i=1;i<=$file;i++))
           do
 
-                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+                  year=$(find ./$1 | grep ff | head -$i | tail -1)
                   population=$(tail -1 $year >> ./popMax)
                   maxPop=$(sort -rn popMax | head -1)
           done
 
-                  echo "The maximum population for $yearInput is: $maxPop "
+                  echo "The maximum population for $1 is: $maxPop "
                   rm -r popMax
   fi
 
@@ -34,13 +32,13 @@
   then
           for ((i=1;i<=$file;i++))
           do
-                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+                  year=$(find ./$1 | grep ff | head -$i | tail -1)
                   minPopulation=$(tail -1 $year >> ./popMin)
                   minPop=$(sort -n popMin | head -1)
                   rm -r popMin
           done
 
-                  echo "The minimum population for $yearInput is: $minPop "
+                  echo "The minimum population for $1 is: $minPop "
 
   fi
 
@@ -50,14 +48,14 @@
           for ((i=1;i<=$file;i++))
           do
                   avgPop=0
-                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+                  year=$(find ./$1 | grep ff | head -$i | tail -1)
                   population=$(tail -1 $year)
                   total=$(($total  + $population))
                   done
                   avgPop=$(($total / $file))
           #       done
 
-                  echo "The average population for $yearInput is: $avgPop"
+                  echo "The average population for $1 is: $avgPop"
   fi
 
   if [[ "$Function" == "all" ]]
@@ -65,7 +63,7 @@
 
           for ((i=1;i<=$file;i++))
           do
-                  year=$(find ./$yearInput | grep ff | head -$i | tail -1)
+                  year=$(find ./$1 | grep ff | head -$i | tail -1)
 
                   population=$(tail -1 $year >> ./popMax)
                   population=$(tail -1 $year >> ./popMin)
@@ -76,7 +74,9 @@
                   total=$((total + $population))
                   done
                  avgPop=$(($total /$file))
-          echo "For $yearInput , the minimum population was: $minPop , the maximum was $maxPop     and the average was $avgPop "
+          echo "For $1 , the minimum population was: $minPop , the maximum was $maxPop     and the average was $avgPop "
 
 
   fi
+
+“$@“
