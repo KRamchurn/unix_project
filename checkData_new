@@ -10,7 +10,7 @@ do
 path=$(find | grep ff | head -$n | tail -1 | cut -d"/" -f2-5)
 pathDate=$(find | grep ff | head -$n | tail -1 | cut -d"/" -f2-4 | tr "/" "-")
 fileDate=$(cat $path | head -1)
-fileName=$(find | grep ff | head -$n | tail -1 | cut -d"/" -f5)
+fileName=$(find | grep ff | head -$n | tail -1 | cut -d"/" -f5) #to determine how files are corrupted compared to the original dataset 
 
         if [[ "$pathDate" != "$fileDate" ]]
         then
