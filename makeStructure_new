@@ -16,7 +16,7 @@ day=$(head -1 $file | cut -d"-" -f3)
                mkdir ./$year
        fi
 
-       if ls ./$year | grep ^"$month"
+       if ls ./$year | grep ^"$month" #layering file directories based on further specificity
        then
                mkdir ./$year/$month
        fi
