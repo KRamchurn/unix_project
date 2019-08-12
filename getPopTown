@@ -1,15 +1,41 @@
 #!/usr/bin/env bash
 
-. ./createTownIndex
+i=0
 
-read -p "Please enter the town you wish to search " townInput
+while [ $i -lt 1 ]
+do
+ 
+       read -p "Enter town or 'search' to search: " name
+ 
+       if [[ "$name" == "search" ]]
+       then
+               i=1
+       else
+               echo $name >> ./tmpTown
+       fi
+ 
+done
+ 
+townList=$(cat ./tmpTown)
+ 
+for towns in $townList
+do
 
-for l in townFileIndex
-if [[$townInput != $town]]
+       townName=$(grep "$towns" ./townFileIndex | cut -d":" -f1 | head -1)
+       townLocation=$(grep "$towns" ./townFileIndex | cut -d":" -f2)
+ 
+       echo "$towns:"
+       if [[ "$townName" != "$towns" ]]
+       then
+               echo "Cannot find this town in the current records"
+       else
+               for info  in $townLocation
+               do
+                       date=$(head -1 $info)
+                       pop=$(tail -1 $info)
+                       echo "$date:$pop"
+               done
+       fi
+done
 
-  echo "Cannot find this town in the current records"
-
-exit 0
-fi
-
-if [[$townInput == $town]]
+rm -r tmpTown
